@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Helpers\Helper;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,5 +30,9 @@ class AppServiceProvider extends ServiceProvider
                 'last_seen_at' => Helper::userLastActivityStatus($user->last_seen_at),
             ];
         });
+
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
     }
 }
